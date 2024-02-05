@@ -1,0 +1,29 @@
+apiVersion: v1
+kind: Service
+metadata:
+  labels:
+    app: dotnetapi
+  name: dotnetapi
+spec:
+  allocateLoadBalancerNodePorts: true
+  #clusterIP: 10.0.183.107
+  #clusterIPs:
+  #- 10.0.183.107
+  externalTrafficPolicy: Cluster
+  internalTrafficPolicy: Cluster
+  ipFamilies:
+  - IPv4
+  ipFamilyPolicy: SingleStack
+  ports:
+  - nodePort: 30879
+    port: 80
+    protocol: TCP
+    targetPort: 80
+  selector:
+    app: dotnetapi
+  sessionAffinity: None
+  type: LoadBalancer
+#status:
+#  loadBalancer:
+#    ingress:
+#    - ip: 20.29.131.113

@@ -1,0 +1,47 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: todoapi-deployment
+  namespace: instana-agent
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: todoapi
+  template:
+    metadata:
+      labels:
+        app: todoapi
+      annotations:
+        instana.io/scoped: "true"
+    spec:
+      containers:
+      - name: todoapi
+        image: direstrepobr/todoapi:1.19
+        ports:
+        - containerPort: 80
+        env:
+        - name: DOTNET_STARTUP_HOOKS
+          value: "/app/Instana.Tracing.Core.dll"
+        - name: CORECLR_ENABLE_PROFILING
+          value: "1"
+        - name: CORECLR_PROFILER
+          value: "{cf0d821e-299b-5307-a3d8-b283c03916dd}"
+        - name: CORECLR_PROFILER_PATH
+          value: "/app/instana_tracing/CoreProfiler.so"
+        - name: INSTANA_AGENT_HOST
+          value: "instana-agent.instana-agent.svc.cluster.local"
+        - name: TRACER_EXPORTER_OTLP_ENDPOINT
+          value: "http://$(INSTANA_AGENT_HOST):4318"
+        - name: INSTANA_AGENT_PORT
+          value: "42699"
+        - name: INSTANA_AGENT_KEY
+          valueFrom:
+            secretKeyRef:
+              name: instana-agent-secret
+              key: key
+        - name: INSTANA_ENDPOINT_URL
+          value: "https://ingress-coral-saas.instana.io:443" 
+
+
+

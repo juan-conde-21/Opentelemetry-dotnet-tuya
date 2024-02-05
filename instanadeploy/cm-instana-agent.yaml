@@ -1,0 +1,29 @@
+apiVersion: v1
+data:
+  cluster_name: sunat-demo
+  configuration-disable-kubernetes-sensor.yaml: |
+    com.instana.plugin.kubernetes:
+      enabled: false
+  configuration.yaml: |
+    com.instana.plugin.opentelemetry:
+      grpc:
+        enabled: true
+      http:
+        enabled: true
+    com.instana.tracing:
+      extra-http-headers:
+        - traceparent
+        - tracestate
+kind: ConfigMap
+metadata:
+  annotations:
+    meta.helm.sh/release-name: instana-agent
+    meta.helm.sh/release-namespace: instana-agent
+  labels:
+    app.kubernetes.io/instance: instana-agent
+    app.kubernetes.io/managed-by: Helm
+    app.kubernetes.io/name: instana-agent
+    app.kubernetes.io/version: 1.2.67
+    helm.sh/chart: instana-agent-1.2.67
+  name: instana-agent
+  namespace: instana-agent

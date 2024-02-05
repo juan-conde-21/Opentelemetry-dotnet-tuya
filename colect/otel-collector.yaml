@@ -1,0 +1,59 @@
+apiVersion: apps/v1
+kind: DaemonSet
+metadata:
+  name: opentelemetry-collector
+  namespace: instana-agent
+spec:
+  selector:
+    matchLabels:
+      app: opentelemetry-collector
+  template:
+    metadata:
+      labels:
+        app: opentelemetry-collector
+    spec:
+      containers:
+      - name: collector
+        image: otel/opentelemetry-collector:latest
+        args: ["--config=/etc/otel-collector/config.yaml"]
+        volumeMounts:
+        - name: otel-collector-config
+          mountPath: /etc/otel-collector
+      volumes:
+      - name: otel-collector-config
+        configMap:
+          name: otel-collector-config
+---
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: otel-collector-config
+  namespace: instana-agent
+data:
+  config.yaml: |
+    receivers:
+      otlp:
+        protocols:
+          http:
+
+    exporters:
+      otlphttp:
+        endpoint: 'otlp-blue-saas.instana.io:4318' 
+        headers:
+          x-instana-key: m2VxAzQJRUWvpTYEqnltvA
+        
+        tls:
+          insecure: true 
+
+    service:
+      pipelines:
+        traces:
+          receivers: [otlp]
+          exporters: [otlphttp]
+        metrics:
+          receivers: [otlp]
+          exporters: [otlphttp]
+        logs:
+          receivers: [otlp]
+          exporters: [otlphttp]
+

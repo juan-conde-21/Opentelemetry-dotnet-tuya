@@ -1,0 +1,43 @@
+receivers:
+  otlp:
+    protocols:
+      grpc:
+      http:
+  
+  resource:
+    attributes:
+      - action: insert
+        key: loki.resource.labels
+        value: service.name
+  batch:
+    timeout: 1s
+    send_batch_size: 1024
+
+exporters:
+  otlp:
+    endpoint: jaeger:4317
+    tls:
+      insecure: true
+  prometheus:
+    endpoint: 0.0.0.0:8889 # Este endpoint es raspeado por Prometheus
+  instana:
+    endpoint: https://serverless-coral-saas.instana.io
+    agent_key: Fr4u4GzWQEi6ubbyPRcw8g
+    tls:
+      insecure: true
+
+service:
+  pipelines:
+    traces:
+      receivers:
+        - otlp
+      exporters: [otlp, instana]
+    metrics:
+      receivers:
+        - otlp
+      exporters:
+        - prometheus
+    logs:
+      receivers: [otlp]
+      processors: [batch, resource]
+      exporters: [otlp, instana] # Usamos el exportador instana_logs para enviar logs a Instana

@@ -1,0 +1,12 @@
+01/05/2024 10:34:33 -05:00 Seri Log is Working
+01/05/2024 10:34:33 -05:00 Se ha recibido una solicitud GET en el endpoint /api/example
+01/05/2024 10:34:33 -05:00 Número de tarjeta de crédito: { CreditCardNumber: "XXXX-XXXX-XXXX-3456" }
+01/05/2024 10:34:33 -05:00 Registro adicional con información enriquecida
+01/05/2024 10:34:37 -05:00 Seri Log is Working
+01/05/2024 10:34:37 -05:00 Se ha recibido una solicitud GET en el endpoint /api/example
+01/05/2024 10:34:37 -05:00 Número de tarjeta de crédito: { CreditCardNumber: "XXXX-XXXX-XXXX-3456" }
+01/05/2024 10:34:37 -05:00 Registro adicional con información enriquecida
+01/05/2024 11:42:48 -05:00 Seri Log is Working
+01/05/2024 11:42:48 -05:00 Se ha recibido una solicitud GET en el endpoint /api/example
+01/05/2024 11:42:48 -05:00 Número de tarjeta de crédito: { CreditCardNumber: "XXXX-XXXX-XXXX-3456" }
+01/05/2024 11:42:48 -05:00 Registro adicional con información enriquecida

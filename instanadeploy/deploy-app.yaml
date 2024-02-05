@@ -1,0 +1,42 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  annotations:
+    deployment.kubernetes.io/revision: "17"
+  labels:
+    app: dotnetapi
+  name: dotnetapi
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: dotnetapi
+  strategy:
+    rollingUpdate:
+      maxSurge: 25%
+      maxUnavailable: 25%
+    type: RollingUpdate
+  template:
+    metadata:
+      labels:
+        app: dotnetapi
+    spec:
+      containers:
+      - env:
+        - name: OTEL_RESOURCE_ATTRIBUTES
+          value: version=2.1
+        - name: OTEL_EXPORTER_OTLP_ENDPOINT
+          value: http://instana-agent.instana-agent.svc:4317
+        - name: OTEL_SERVICE_NAME
+          value: dotnetapi
+        image: direstrepobr/dotnetdemo:1.17
+        imagePullPolicy: IfNotPresent
+        name: dotnetapi
+        resources: {}
+        terminationMessagePath: /dev/termination-log
+        terminationMessagePolicy: File
+      dnsPolicy: ClusterFirst
+      restartPolicy: Always
+      schedulerName: default-scheduler
+      securityContext: {}
+      terminationGracePeriodSeconds: 30

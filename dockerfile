@@ -16,10 +16,15 @@ RUN dotnet publish -c Release -o out
 #Ejecucion de app utilizando script de instrumentacion automatica
 RUN apk update && apk add unzip && apk add curl && apk add bash
 RUN mkdir /otel
-RUN curl -L -o /otel/otel-dotnet-auto-install.sh https://github.com/open-telemetry/opentelemetry-dotnet-instrumentation/releases/latest/download/otel-dotnet-auto-install.sh
-RUN chmod +x /otel/otel-dotnet-auto-install.sh
+RUN curl -L -o /tmp/opentelemetry-dotnet-instrumentation-linux-musl.zip https://github.com/open-telemetry/opentelemetry-dotnet-instrumentation/releases/latest/download/opentelemetry-dotnet-instrumentation-linux-musl.zip
+
+
+RUN unzip /tmp/opentelemetry-dotnet-instrumentation-linux-musl.zip -d /otel
+
+#RUN curl -L -o /otel/otel-dotnet-auto-install.sh https://github.com/open-telemetry/opentelemetry-dotnet-instrumentation/releases/latest/download/otel-dotnet-auto-install.sh
+RUN chmod +x /otel/instrument.sh
 ENV OTEL_DOTNET_AUTO_HOME=/otel
-RUN /bin/bash /otel/otel-dotnet-auto-install.sh
+RUN /bin/bash /otel/instrument.sh
 
 # Fase de ejecución utilizando la imagen runtime de .NET 6 Alpine
 FROM mcr.microsoft.com/dotnet/aspnet:6.0-alpine

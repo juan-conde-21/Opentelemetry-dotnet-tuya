@@ -18,6 +18,10 @@
     --set webhook.imagePullCredentials.password={apikey}\
     --set autotrace.opt_in=true
 
+4. Para nuevos despliegues, agregar el label a nivel de los deployments
+
+    instana-autotrace: "true"
+
 # Despliegue de Agente Instana en Kubernetes
 
     helm install instana-agent \

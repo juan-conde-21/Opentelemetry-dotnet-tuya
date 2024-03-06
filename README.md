@@ -22,6 +22,27 @@
 
     instana-autotrace: "true"
 
+        apiVersion: apps/v1
+        kind: Deployment
+        metadata:
+          labels:
+            instana-autotrace: "true"
+            app: rolldice
+          name: rolldice
+        spec:
+          replicas: 2
+          selector:
+            matchLabels:
+              app: rolldice
+          template:
+            metadata:
+              labels:
+                app: rolldice
+            spec:
+              containers:
+              - image: juanconde24/rolldice:2.7
+                name: rolldice
+
 # Despliegue de Agente Instana en Kubernetes
 
     helm install instana-agent \

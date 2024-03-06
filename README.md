@@ -18,4 +18,20 @@
     --set webhook.imagePullCredentials.password={apikey}\
     --set autotrace.opt_in=true
 
+# Despliegue de Agente Instana en Kubernetes
+
+    helm install instana-agent \
+       --repo https://agents.instana.io/helm \
+       --namespace instana-agent \
+       --create-namespace \
+       --set agent.key={apikey}\
+       --set agent.downloadKey={apikey} \
+       --set agent.endpointHost=ingress-coral-saas.instana.io \
+       --set agent.endpointPort=443 \
+       --set cluster.name='airflow' \
+       --set zone.name='prod' \
+       --set opentelemetry.enabled=true \
+       --set opentelemetry.grpc.enabled=true \
+       --set opentelemetry.http.enabled=true \
+       instana-agent
 

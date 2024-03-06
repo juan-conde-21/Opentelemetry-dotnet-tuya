@@ -43,6 +43,8 @@
               - image: juanconde24/rolldice:2.7
                 name: rolldice
 
+5. Para revertir los cambios se debe retirar la etiqueta "instana-autotrace" y eliminar el deployment.
+
 # Despliegue de Agente Instana en Kubernetes
 
     helm install instana-agent \

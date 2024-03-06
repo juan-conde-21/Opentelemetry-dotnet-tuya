@@ -18,7 +18,7 @@
     --set webhook.imagePullCredentials.password={apikey}\
     --set autotrace.opt_in=true
 
-4. Agregar el label a nivel de los deployments.
+4. Agregar el label a nivel de los deployments
 
     instana-autotrace: "true"
 

@@ -28,8 +28,8 @@
        --set agent.downloadKey={apikey} \
        --set agent.endpointHost=ingress-coral-saas.instana.io \
        --set agent.endpointPort=443 \
-       --set cluster.name='airflow' \
-       --set zone.name='prod' \
+       --set cluster.name='{definir}' \
+       --set zone.name='{definir}' \
        --set opentelemetry.enabled=true \
        --set opentelemetry.grpc.enabled=true \
        --set opentelemetry.http.enabled=true \
